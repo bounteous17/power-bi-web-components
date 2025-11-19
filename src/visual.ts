@@ -104,10 +104,10 @@ export class Visual implements IVisual {
         const width = 460;
         const height = 404;
 
-        // Chart area boundaries - minimal padding
+        // Chart area boundaries - with space for title
         const chartLeft = 40;
         const chartRight = 450;
-        const chartTop = 20;
+        const chartTop = 60;
         const chartBottom = 370;
 
         // Create SVG with viewBox for responsiveness
@@ -117,6 +117,15 @@ export class Visual implements IVisual {
             .attr("viewBox", `0 0 ${width} ${height}`)
             .attr("preserveAspectRatio", "xMidYMid meet");
 
+        // Add title
+        svg.append("text")
+            .attr("x", 17)
+            .attr("y", 30)
+            .attr("fill", this.titleColor)
+            .attr("font-family", "Inter, sans-serif")
+            .attr("font-size", "16px")
+            .attr("font-weight", "500")
+            .text("Inventory");
 
         // Calculate max count for Y-axis scale
         const maxCount = Math.max(...data.map(d => d.count));
