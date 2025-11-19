@@ -7,10 +7,10 @@
       "description": "Brand names for the donut chart (e.g., Brand A, Brand B)"
     },
     {
-      "displayName": "Values",
+      "displayName": "Count",
       "name": "measure",
       "kind": "Measure",
-      "description": "Values for each brand segment"
+      "description": "Count of occurrences (drag any field and set aggregation to Count)"
     },
     {
       "displayName": "Gross Profit Margin",
@@ -83,6 +83,21 @@
     }
   ],
   "objects": {
+    "general": {
+      "displayName": "General",
+      "properties": {
+        "backgroundColor": {
+          "displayName": "Background Color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        }
+      }
+    },
     "chartColors": {
       "displayName": "Chart Colors",
       "properties": {
@@ -140,6 +155,7 @@
     }
   },
   "supportsHighlight": true,
+  "suppressDefaultTitle": true,
   "sorting": {
     "default": {}
   },
