@@ -1,0 +1,152 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Category",
+      "name": "category",
+      "kind": "Grouping",
+      "description": "Brand names for the donut chart (e.g., Brand A, Brand B)"
+    },
+    {
+      "displayName": "Values",
+      "name": "measure",
+      "kind": "Measure",
+      "description": "Values for each brand segment"
+    },
+    {
+      "displayName": "Gross Profit Margin",
+      "name": "grossProfitMargin",
+      "kind": "Measure",
+      "description": "Gross profit margin percentage"
+    },
+    {
+      "displayName": "Profit Amount",
+      "name": "profitAmount",
+      "kind": "Measure",
+      "description": "Total profit amount"
+    },
+    {
+      "displayName": "COGS",
+      "name": "cogs",
+      "kind": "Measure",
+      "description": "Cost of Goods Sold"
+    },
+    {
+      "displayName": "EBITDA",
+      "name": "ebitda",
+      "kind": "Measure",
+      "description": "EBITDA value"
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "categorical": {
+        "categories": {
+          "for": {
+            "in": "category"
+          },
+          "dataReductionAlgorithm": {
+            "top": {
+              "count": 10
+            }
+          }
+        },
+        "values": {
+          "select": [
+            {
+              "bind": {
+                "to": "measure"
+              }
+            },
+            {
+              "bind": {
+                "to": "grossProfitMargin"
+              }
+            },
+            {
+              "bind": {
+                "to": "profitAmount"
+              }
+            },
+            {
+              "bind": {
+                "to": "cogs"
+              }
+            },
+            {
+              "bind": {
+                "to": "ebitda"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "objects": {
+    "chartColors": {
+      "displayName": "Chart Colors",
+      "properties": {
+        "color1": {
+          "displayName": "Color 1",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "color2": {
+          "displayName": "Color 2",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "color3": {
+          "displayName": "Color 3",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "color4": {
+          "displayName": "Color 4",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "color5": {
+          "displayName": "Color 5",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "supportsHighlight": true,
+  "sorting": {
+    "default": {}
+  },
+  "drilldown": {
+    "roles": [
+      "category"
+    ]
+  },
+  "privileges": []
+}

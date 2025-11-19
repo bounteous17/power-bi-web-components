@@ -1,0 +1,31 @@
+{
+  "name": "profit-dashboard-visual",
+  "version": "1.0.0",
+  "description": "Profit Dashboard with Donut Chart and KPIs",
+  "main": "dist/visual.js",
+  "scripts": {
+    "pbiviz": "pbiviz",
+    "start": "pbiviz start",
+    "package": "pbiviz package",
+    "package-no-lint": "pbiviz package --no-lint",
+    "lint": "eslint . --ext .ts,.tsx",
+    "preview": "node scripts/generate-preview.js && open preview.html"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "d3": "^7.8.5",
+    "powerbi-visuals-api": "~5.11.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.0",
+    "@types/d3-dispatch": "^3.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "powerbi-visuals-tools": "6.2.0",
+    "powerbi-visuals-utils-dataviewutils": "^6.0.1",
+    "powerbi-visuals-utils-formattingutils": "^5.1.0",
+    "typescript": "^4.9.5"
+  }
+}

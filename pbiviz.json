@@ -1,0 +1,25 @@
+{
+  "visual": {
+    "name": "ProfitDashboardVisual",
+    "displayName": "Profit Dashboard",
+    "guid": "profitDashboard9A8B7C6D5E4F",
+    "visualClassName": "Visual",
+    "version": "1.0.0.0",
+    "description": "Dashboard with donut chart and profit KPIs",
+    "supportUrl": "https://github.com",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "5.11.0",
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com"
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": [],
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json",
+  "dependencies": null,
+  "stringResources": []
+}
