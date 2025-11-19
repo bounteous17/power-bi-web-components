@@ -100,15 +100,15 @@ export class Visual implements IVisual {
     private renderChart(data: { category: string; count: number }[]) {
         this.container.innerHTML = "";
 
-        // SVG dimensions matching the design (460 x 404 viewBox)
-        const width = 460;
+        // SVG dimensions matching the design
+        const width = 670;
         const height = 404;
 
-        // Chart area boundaries - with space for title
-        const chartLeft = 40;
-        const chartRight = 450;
-        const chartTop = 60;
-        const chartBottom = 370;
+        // Chart area boundaries - with space for title and right info
+        const chartLeft = 52;
+        const chartRight = 436;
+        const chartTop = 80;
+        const chartBottom = 319;
 
         // Create SVG with viewBox for responsiveness
         const svg = d3.select(this.container)
@@ -120,12 +120,37 @@ export class Visual implements IVisual {
         // Add title
         svg.append("text")
             .attr("x", 17)
-            .attr("y", 30)
+            .attr("y", 41)
             .attr("fill", this.titleColor)
             .attr("font-family", "Inter, sans-serif")
             .attr("font-size", "16px")
             .attr("font-weight", "500")
             .text("Inventory");
+
+        // Calculate average of all Y values
+        const avgValue = data.reduce((sum, d) => sum + d.count, 0) / data.length;
+
+        // Add right side info - Avg Inventory Cost (positioned at x=476 as in SVG)
+        const infoX = 476;
+
+        // Label
+        svg.append("text")
+            .attr("x", infoX)
+            .attr("y", 143)
+            .attr("fill", "#B0AEAF")
+            .attr("font-family", "Inter, sans-serif")
+            .attr("font-size", "11px")
+            .text("Avg Inventory Cost");
+
+        // Value
+        svg.append("text")
+            .attr("x", infoX)
+            .attr("y", 170)
+            .attr("fill", this.titleColor)
+            .attr("font-family", "Inter, sans-serif")
+            .attr("font-size", "24px")
+            .attr("font-weight", "600")
+            .text(avgValue.toFixed(1));
 
         // Calculate max count for Y-axis scale
         const maxCount = Math.max(...data.map(d => d.count));
