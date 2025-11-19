@@ -14,6 +14,7 @@ export class Visual implements IVisual {
     private gridColor: string = "#504E4F";
     private axisLabelColor: string = "#7F7F7F";
     private titleColor: string = "#DCDADA";
+    private backgroundColor: string = "#111921";
 
     constructor(options: VisualConstructorOptions) {
         this.target = options.element;
@@ -26,6 +27,20 @@ export class Visual implements IVisual {
 
     public update(options: VisualUpdateOptions) {
         const dataView: DataView = options.dataViews && options.dataViews[0];
+
+        // Get background color from formatting options
+        if (dataView && dataView.metadata && dataView.metadata.objects) {
+            const objects = dataView.metadata.objects;
+            if (objects.general) {
+                const bgColor = objects.general.backgroundColor;
+                if (bgColor && (bgColor as any).solid) {
+                    this.backgroundColor = (bgColor as any).solid.color;
+                }
+            }
+        }
+
+        // Apply background color to container
+        this.container.style.backgroundColor = this.backgroundColor;
 
         let chartData: { category: string; count: number }[] = [];
 
@@ -75,11 +90,11 @@ export class Visual implements IVisual {
         const width = 460;
         const height = 404;
 
-        // Chart area boundaries from SVG
-        const chartLeft = 52;
-        const chartRight = 436;
-        const chartTop = 80;
-        const chartBottom = 319;
+        // Chart area boundaries - minimal padding
+        const chartLeft = 40;
+        const chartRight = 450;
+        const chartTop = 20;
+        const chartBottom = 370;
 
         // Create SVG with viewBox for responsiveness
         const svg = d3.select(this.container)
@@ -88,14 +103,6 @@ export class Visual implements IVisual {
             .attr("viewBox", `0 0 ${width} ${height}`)
             .attr("preserveAspectRatio", "xMidYMid meet");
 
-        // Add title
-        svg.append("text")
-            .attr("x", 17)
-            .attr("y", 41)
-            .attr("fill", this.titleColor)
-            .attr("font-size", "14px")
-            .attr("font-weight", "500")
-            .text("Inventory");
 
         // Calculate max count for Y-axis scale
         const maxCount = Math.max(...data.map(d => d.count));
@@ -104,7 +111,8 @@ export class Visual implements IVisual {
         // Scales
         const xScale = d3.scalePoint<string>()
             .domain(data.map(d => d.category))
-            .range([chartLeft, chartRight]);
+            .range([chartLeft, chartRight])
+            .padding(0.5);
 
         const yScale = d3.scaleLinear()
             .domain([0, yMax])
@@ -162,7 +170,7 @@ export class Visual implements IVisual {
             if (x !== undefined) {
                 svg.append("text")
                     .attr("x", x)
-                    .attr("y", 333)
+                    .attr("y", chartBottom + 14)
                     .attr("text-anchor", "middle")
                     .attr("fill", this.titleColor)
                     .attr("font-size", "11px")
@@ -208,34 +216,5 @@ export class Visual implements IVisual {
                     .attr("stroke-width", 0.88398);
             }
         });
-
-        // Draw legend
-        const legendGroup = svg.append("g")
-            .attr("transform", "translate(158, 368)");
-
-        // Legend glow circle
-        legendGroup.append("circle")
-            .attr("cx", 8)
-            .attr("cy", 0)
-            .attr("r", 8)
-            .attr("fill", this.lineColor)
-            .attr("opacity", 0.25);
-
-        // Legend inner circle
-        legendGroup.append("circle")
-            .attr("cx", 8)
-            .attr("cy", 0)
-            .attr("r", 3.5)
-            .attr("fill", this.lineColor)
-            .attr("stroke", "white")
-            .attr("stroke-width", 1);
-
-        // Legend text
-        legendGroup.append("text")
-            .attr("x", 24)
-            .attr("y", 5)
-            .attr("fill", this.titleColor)
-            .attr("font-size", "11px")
-            .text("Inventory Turnover");
     }
 }
