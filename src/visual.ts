@@ -47,24 +47,38 @@ export class Visual implements IVisual {
         // Extract data from Power BI dataView
         if (dataView && dataView.categorical) {
             const categorical = dataView.categorical;
-            const categories = categorical.categories ? categorical.categories[0].values : [];
+            const categoriesColumn = categorical.categories ? categorical.categories[0] : null;
+            const categories = categoriesColumn ? categoriesColumn.values : [];
+
+            // Get the column name to filter it out if it appears in the data
+            const columnName = categoriesColumn && categoriesColumn.source ? categoriesColumn.source.displayName : null;
 
             // Get the count values from the measure (values field)
             const values = categorical.values && categorical.values[0] ? categorical.values[0].values : [];
 
             if (categories.length > 0 && values.length > 0) {
                 // Use the values from Power BI (which should be the count measure)
-                chartData = categories.map((cat, i) => ({
-                    category: String(cat),
-                    count: Number(values[i]) || 0
-                }));
+                // Skip last row as it contains the column header from xlsx
+                for (let i = 0; i < categories.length - 1; i++) {
+                    const cat = String(categories[i]);
+                    const val = values[i];
+                    if (val != null) {
+                        chartData.push({
+                            category: cat,
+                            count: Number(val) || 0
+                        });
+                    }
+                }
             } else if (categories.length > 0) {
                 // Fallback: if no measure provided, count occurrences manually
                 // This works when using table/matrix data role instead of categorical
                 const countMap = new Map<string, number>();
                 categories.forEach(cat => {
                     const key = String(cat);
-                    countMap.set(key, (countMap.get(key) || 0) + 1);
+                    // Skip if category matches column name
+                    if (key !== columnName) {
+                        countMap.set(key, (countMap.get(key) || 0) + 1);
+                    }
                 });
 
                 chartData = Array.from(countMap.entries()).map(([category, count]) => ({
@@ -174,7 +188,7 @@ export class Visual implements IVisual {
                     .attr("text-anchor", "middle")
                     .attr("fill", this.titleColor)
                     .attr("font-size", "11px")
-                    .text(d.category);
+                    .text(d.category.substring(0, 3).toUpperCase());
             }
         });
 

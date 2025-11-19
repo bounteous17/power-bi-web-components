@@ -157,7 +157,14 @@
   "supportsHighlight": true,
   "suppressDefaultTitle": true,
   "sorting": {
-    "default": {}
+    "implicit": {
+      "clauses": [
+        {
+          "role": "category",
+          "direction": 1
+        }
+      ]
+    }
   },
   "drilldown": {
     "roles": [
