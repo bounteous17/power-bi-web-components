@@ -28,17 +28,6 @@ export class Visual implements IVisual {
     public update(options: VisualUpdateOptions) {
         const dataView: DataView = options.dataViews && options.dataViews[0];
 
-        // Get background color from formatting options
-        if (dataView && dataView.metadata && dataView.metadata.objects) {
-            const objects = dataView.metadata.objects;
-            if (objects.general) {
-                const bgColor = objects.general.backgroundColor;
-                if (bgColor && (bgColor as any).solid) {
-                    this.backgroundColor = (bgColor as any).solid.color;
-                }
-            }
-        }
-
         // Apply background color to container
         this.container.style.backgroundColor = this.backgroundColor;
 

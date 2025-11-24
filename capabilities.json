@@ -83,21 +83,6 @@
     }
   ],
   "objects": {
-    "general": {
-      "displayName": "General",
-      "properties": {
-        "backgroundColor": {
-          "displayName": "Background Color",
-          "type": {
-            "fill": {
-              "solid": {
-                "color": true
-              }
-            }
-          }
-        }
-      }
-    },
     "chartColors": {
       "displayName": "Chart Colors",
       "properties": {
